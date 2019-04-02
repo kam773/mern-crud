@@ -1,0 +1,12 @@
+.container {
+    margin: 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.textCenter {
+    text-align: center;
+    margin: 1rem 0;
+}
