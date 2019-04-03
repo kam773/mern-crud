@@ -123,7 +123,7 @@ export default class CreateStudent extends Component {
                                 />
                             </div>
                             <div className="col">
-                                <button onClick={this.uploadHandler}>Upload</button>
+                                {/* <button onClick={this.uploadHandler}>Upload</button> */}
                             </div>
                         </div>
                     </div>
