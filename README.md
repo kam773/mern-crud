@@ -1,4 +1,4 @@
-# mern-crud
+# MERN-CRUD
 
 CRUD using the MERN Stack: MongoDB, Express.js, Reactjs & Node.
 
