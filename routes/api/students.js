@@ -44,7 +44,14 @@ router.post('/uploads', (req, res, next) => {
             fs.unlinkSync(path)
             // return image details
             res.json(image)
-
+            // const newStudent = Student({
+            //     firstName: req.body.firstName,
+            //     lastName: req.body.lastName,
+            //     dob: req.body.dob,
+            //     hobby: req.body.hobby,
+            //     imageUrl: image.url
+            // })
+            // newStudent.save().then(student => res.json(student))
         })
     })
 })
@@ -66,7 +73,7 @@ router.post('/', (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         dob: req.body.dob,
-        hobby: req.body.hobby,
+        hobby: req.body.hobby
     })
     newStudent.save().then(student => res.json(student))
 })

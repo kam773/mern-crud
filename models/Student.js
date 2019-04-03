@@ -18,10 +18,12 @@ const StudentSchema = new Schema({
     },
     hobby: {
         type: String,
+        required: true
     },
-    imageUrl: {
-        type: String
-    }
+    // imageUrl: {
+    //     type: String,
+    //     required: true
+    // }
 })
 
 

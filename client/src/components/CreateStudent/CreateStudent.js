@@ -10,7 +10,7 @@ export default class CreateStudent extends Component {
             lastName: '',
             dob: '',
             hobby: '',
-            selectedFile: null
+            file: null
         }
     }
     handleChange = e => {
@@ -20,21 +20,19 @@ export default class CreateStudent extends Component {
 
     }
     // fileChangeHandler = e => {
-    //     const file = e.target.files[0]
-    //     this.setState({ selectedFile: file })
-    //     console.log(file)
+    //     this.setState({ file: e.target.files[0] })
     // }
-    // uploadHandler = () => {
+    // uploadHandler = (file) => {
     //     const data = new FormData();
-    //     data.append('file', this.state.selectedFile, this.state.selectedFile.name);
+    //     data.append('file', file);
 
-    //     fetch('http://localhost:5000/api/students', {
+    //     return fetch('http://localhost:5000/api/students', {
     //         mode: 'no-cors',
-    //         method: 'post',
+    //         method: 'POST',
     //         body: data
     //     }).then((response) => {
-    //         console.log(response);
-    //     });
+    //         console.log(response.data);
+    //     })
     // }
     handleSubmit = e => {
         e.preventDefault();
@@ -46,6 +44,10 @@ export default class CreateStudent extends Component {
         }
         axios.post('http://localhost:5000/api/students', newStudent)
             .then(res => console.log(res.data));
+
+        // this.uploadHandler(this.state.file).then((response) => {
+        //     console.log(response.data);
+        // })
 
         this.setState({
             firstName: '',

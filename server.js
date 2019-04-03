@@ -4,7 +4,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 
-
 // Routes
 const students = require('./routes/api/students')
 
