@@ -28,9 +28,9 @@ router.post('/uploads', (req, res, next) => {
         // SEND FILE TO CLOUDINARY
         const cloudinary = require('cloudinary').v2
         cloudinary.config({
-            cloud_name: 'dpwtsrjko',
-            api_key: '353974553612196',
-            api_secret: 'GQjioxgbAWwE5agZo-GYnvLxRa4'
+            cloud_name: '',
+            api_key: '',
+            api_secret: ''
         })
 
         const path = req.file.path
