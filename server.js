@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-
+require('dotenv').config();
 
 // Routes
 const students = require('./routes/api/students')

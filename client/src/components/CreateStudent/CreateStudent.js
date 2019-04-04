@@ -10,7 +10,7 @@ export default class CreateStudent extends Component {
             lastName: '',
             dob: '',
             hobby: '',
-            file: null
+            imageUrl: ''
         }
     }
     handleChange = e => {
@@ -19,48 +19,52 @@ export default class CreateStudent extends Component {
         })
 
     }
-    // fileChangeHandler = e => {
-    //     this.setState({ file: e.target.files[0] })
-    // }
-    // uploadHandler = (file) => {
-    //     const data = new FormData();
-    //     data.append('file', file);
+    handlePictureUpload = (file) => {
+        axios.get('http://localhost:5000/api/students/uploads')
+            .then(res => {
+                let formData = new FormData();
+                formData.append("signature", res.data.payload.signature)
+                formData.append("api_key", process.env.API_KEY);
+                formData.append("timestamp", res.data.payload.timestamp)
+                formData.append("file", file[0]);
+                console.log(res);
+                fetch(`https://api.cloudinary.com/v1_1/${process.env.CLOUD_NAME}/image/upload`, {
+                    method: 'POST',
+                    body: formData
+                }).then((response) => {
+                    this.setState({
+                        imageUrl: response.data.secure_url
+                    })
+                })
 
-    //     return fetch('http://localhost:5000/api/students', {
-    //         mode: 'no-cors',
-    //         method: 'POST',
-    //         body: data
-    //     }).then((response) => {
-    //         console.log(response.data);
-    //     })
-    // }
+            }).catch(err => console.log('Get credentials Error---------', err));
+    }
     handleSubmit = e => {
         e.preventDefault();
         let newStudent = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             dob: this.state.dob,
-            hobby: this.state.hobby
+            hobby: this.state.hobby,
+            imageUrl: this.state.imageUrl
+
         }
         axios.post('http://localhost:5000/api/students', newStudent)
             .then(res => console.log(res.data));
-
-        // this.uploadHandler(this.state.file).then((response) => {
-        //     console.log(response.data);
-        // })
 
         this.setState({
             firstName: '',
             lastName: '',
             dob: '',
-            hobby: ''
+            hobby: '',
+            imageUrl: ''
         })
 
         this.props.history.push('/');
     }
     render() {
         return (
-            <div className={styles.container}>
+            <div className={styles.container} >
                 <h1 className={styles.textCenter}>Create Student</h1>
                 <form>
                     <div className="form-group">
@@ -117,13 +121,13 @@ export default class CreateStudent extends Component {
                                 <input
                                     className="form-control-file"
                                     type="file"
-                                    name="photo"
+                                    name="imageUrl"
                                     id="photo"
-                                    onChange={this.fileChangeHandler}
+                                    onChange={this.handlePictureUpload}
                                 />
                             </div>
                             <div className="col">
-                                {/* <button onClick={this.uploadHandler}>Upload</button> */}
+
                             </div>
                         </div>
                     </div>

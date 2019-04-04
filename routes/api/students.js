@@ -1,60 +1,79 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer')
+const cloudinary = require('cloudinary');
 
 // Students model
 const Student = require('../../models/Student');
 
-// MULTER
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/')
-    },
-    filename: function (req, file, cb) {
-        console.log(file)
-        cb(null, file.originalname)
+// // MULTER
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, 'uploads/')
+//     },
+//     filename: function (req, file, cb) {
+//         console.log(file)
+//         cb(null, file.originalname)
+//     }
+// })
+
+// router.post('/uploads', (req, res, next) => {
+//     const upload = multer({ storage }).single('file')
+//     upload(req, res, function (err) {
+//         if (err) {
+//             return res.send(err)
+//         }
+//         console.log('file uploaded to server')
+//         console.log(req.file)
+
+//         // SEND FILE TO CLOUDINARY
+//         const cloudinary = require('cloudinary').v2
+//         cloudinary.config({
+//             cloud_name: 'dpwtsrjko',
+//             api_key: '353974553612196',
+//             api_secret: 'GQjioxgbAWwE5agZo-GYnvLxRa4'
+//         })
+
+//         const path = req.file.path
+//         const uniqueFilename = new Date().toISOString()
+
+//         cloudinary.uploader.upload(path, { public_id: `students/${uniqueFilename}`, tags: `students` }, function (err, image) {
+//             if (err) return res.send(err)
+//             console.log('file uploaded to Cloudinary')
+//             // remove file from server
+//             const fs = require('fs')
+//             fs.unlinkSync(path)
+//             // return image details
+//             res.json(image)
+//             // const newStudent = Student({
+//             //     firstName: req.body.firstName,
+//             //     lastName: req.body.lastName,
+//             //     dob: req.body.dob,
+//             //     hobby: req.body.hobby,
+//             //     imageUrl: image.url
+//             // })
+//             // newStudent.save().then(student => res.json(student))
+//         })
+//     })
+// })
+
+router.get('/uploads', (req, res) => {
+
+    const timestamp = Math.round(new Date().getTime() / 1000);
+
+    const api_secret = process.env.API_SECRET;
+
+    const signature = cloudinary.utils.api_sign_request({ timestamp: timestamp }, api_secret);
+    //Define our payload that will have the api key
+    const payload = {
+        timestamp,
+        signature
     }
-})
+    //Then send our payload to our front-end
+    res.status(200).json({ payload });
+});
 
-router.post('/uploads', (req, res, next) => {
-    const upload = multer({ storage }).single('file')
-    upload(req, res, function (err) {
-        if (err) {
-            return res.send(err)
-        }
-        console.log('file uploaded to server')
-        console.log(req.file)
 
-        // SEND FILE TO CLOUDINARY
-        const cloudinary = require('cloudinary').v2
-        cloudinary.config({
-            cloud_name: 'dpwtsrjko',
-            api_key: '353974553612196',
-            api_secret: 'GQjioxgbAWwE5agZo-GYnvLxRa4'
-        })
-
-        const path = req.file.path
-        const uniqueFilename = new Date().toISOString()
-
-        cloudinary.uploader.upload(path, { public_id: `students/${uniqueFilename}`, tags: `students` }, function (err, image) {
-            if (err) return res.send(err)
-            console.log('file uploaded to Cloudinary')
-            // remove file from server
-            const fs = require('fs')
-            fs.unlinkSync(path)
-            // return image details
-            res.json(image)
-            // const newStudent = Student({
-            //     firstName: req.body.firstName,
-            //     lastName: req.body.lastName,
-            //     dob: req.body.dob,
-            //     hobby: req.body.hobby,
-            //     imageUrl: image.url
-            // })
-            // newStudent.save().then(student => res.json(student))
-        })
-    })
-})
 
 // @route   GET api/students
 // @desc    GET all students
@@ -73,7 +92,8 @@ router.post('/', (req, res) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         dob: req.body.dob,
-        hobby: req.body.hobby
+        hobby: req.body.hobby,
+        imageUrl: req.body.imageUrl
     })
     newStudent.save().then(student => res.json(student))
 })

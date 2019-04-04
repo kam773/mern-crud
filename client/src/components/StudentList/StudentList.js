@@ -24,7 +24,6 @@ export default class StudentList extends Component {
         axios.get('http://localhost:5000/api/students/')
             .then(response => {
                 this.setState({ students: response.data });
-                console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
