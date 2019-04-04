@@ -30,8 +30,8 @@ const Student = require('../../models/Student');
 //         const cloudinary = require('cloudinary').v2
 //         cloudinary.config({
 //             cloud_name: 'dpwtsrjko',
-//             api_key: '353974553612196',
-//             api_secret: 'GQjioxgbAWwE5agZo-GYnvLxRa4'
+//             api_key: '',
+//             api_secret: ''
 //         })
 
 //         const path = req.file.path
