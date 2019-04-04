@@ -24,7 +24,7 @@ export default class TableRow extends Component {
                     {this.props.student.hobby}
                 </td>
                 <th colSpan="2">
-                    <img src={`https://via.placeholder.com/40/40`} alt="Avatar" />
+                    <img src={this.props.student.imageUrl} alt="Avatar" />
                 </th>
                 <td>
                     <Link to={"/edit/" + this.props.student._id} className="btn btn-primary">Edit</Link>
