@@ -1,6 +1,6 @@
 # MERN-CRUD
 
-CRUD using the MERN Stack: MongoDB, Express.js, Reactjs & Node.
+CRUD using the MERN Stack: MongoDB, Express.js, React.js & Node.js.
 
 ## Installation
 
